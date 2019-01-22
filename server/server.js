@@ -22,6 +22,16 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
 	console.log("New user connected");
 
+	socket.emit('newMessage', {
+		from: 'admin',
+		text: 'Welcome to the chat app'
+	})
+
+	socket.broadcast.emit('newMessage', {
+		from: 'admin',
+		text: 'New user joined',
+	})
+
 	socket.on('disconnect', () => {
 		console.log("Disconnected from the client");
 	})
@@ -34,10 +44,15 @@ io.on('connection', (socket) => {
 		console.log(message);
 
 		// io.emit emits event to every single connection
-		io.emit('newMessage', {
+		// io.emit('newMessage', {
+		// 	from: message.from,
+		// 	text: message.text,
+		// 	createdAt: new Date().getTime(),
+		// })
+
+		socket.broadcast.emit('newMessage', {      // send the event to everybody except this socket
 			from: message.from,
-			text: message.text,
-			createdAt: new Date().getTime(),
+			text: message.text
 		})
 	})
 
