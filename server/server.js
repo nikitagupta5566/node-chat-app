@@ -32,18 +32,27 @@ io.on('connection', (socket) => {
 
 	socket.on('createMessage', function(message) {
 		console.log(message);
+
+		// io.emit emits event to every single connection
+		io.emit('newMessage', {
+			from: message.from,
+			text: message.text,
+			createdAt: new Date().getTime(),
+		})
 	})
 
-	socket.emit('newEmail', {
-		from: "nikitagupta",
-		text: "Hi how r u",
-		createAt: Date()
-	}); // second argument is the data that we want to pass....since we want to send multiple data we are going to pass an object
+// 	socket.emit('newEmail', {
+// 		from: "nikitagupta",
+// 		text: "Hi how r u",
+// 		createAt: Date()
+// 	}); 
 
-	socket.emit('newMessage', {
-		from: 'Nikita',
-		text: 'Yeah, Sure',
-	})
+// second argument is the data that we want to pass....since we want to send multiple data we are going to pass an object
+
+// 	socket.emit('newMessage', {
+// 		from: 'Nikita',
+// 		text: 'Yeah, Sure',
+// 	})
 })
 
 

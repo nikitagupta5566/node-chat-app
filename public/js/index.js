@@ -11,10 +11,10 @@ socket.on('connect' ,function () {
 		text: "hi i am fine",
 	})
 
-	socket.emit('createMessage', {
-		to: 'nikita',
-		text: 'Can i call u up',
-	})
+	// socket.emit('createMessage', {
+	// 	to: 'nikita',
+	// 	text: 'Can i call u up',
+	// })
 
 })
 
