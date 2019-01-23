@@ -36,9 +36,9 @@ io.on('connection', (socket) => {
 		console.log(email);
 	})
 
-	socket.on('createMessage', function(message) {
+	socket.on('createMessage', (message, callback) => {
 		console.log(message);
-
+		callback('This is from the server');
 		// io.emit emits event to every single connection
 		io.emit('newMessage', generateMessage(message.from,message.text));
 
@@ -61,7 +61,6 @@ io.on('connection', (socket) => {
 // 		text: 'Yeah, Sure',
 // 	})
 // })
-
 
 server.listen(3000, () => {
 	console.log("Server is up on port 3000");

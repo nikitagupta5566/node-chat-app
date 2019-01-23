@@ -6,15 +6,17 @@ var socket = io();
 socket.on('connect' ,function () {
 	console.log("Connected to the server");
 
-	socket.emit('createEmail', {
-		to: "mike@ngkfng.com",
-		text: "hi i am fine",
-	})
-
-	// socket.emit('createMessage', {
-	// 	to: 'nikita',
-	// 	text: 'Can i call u up',
+	// socket.emit('createEmail', {
+	// 	to: "mike@ngkfng.com",
+	// 	text: "hi i am fine",
 	// })
+
+// 	socket.emit('createMessage', {
+// 		from: 'nikita',
+// 		text: 'Can i call u up',
+// 	}, function(data) {
+// 	console.log('Got it!', data);
+// })
 
 })
 
@@ -29,4 +31,20 @@ socket.on('newEmail', function(email) {             // the data that is emmitted
 
 socket.on('newMessage', function(message) {
 	console.log('Hey! you have a new message',message);
+	
+	var li = jQuery('<li></li>');
+	li.text(`${message.from}: ${message.text}`)
+
+	jQuery('#messages').append(li);
+})
+
+jQuery('#message-form').on('submit', function (e) {
+	e.preventDefault();
+
+	socket.emit('createMessage', {
+		from: 'NIK',
+		text: jQuery('[name=message]').val()
+	}, function () {
+
+	})
 })
