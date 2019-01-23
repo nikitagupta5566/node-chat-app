@@ -3,7 +3,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 const http = require('http');
 
-const {generateMessage} = require('./utils/message')
+const {generateMessage, generateLocationMessage} = require('./utils/message')
 
 var publicPath = path.join(__dirname, '../public');
 console.log(publicPath);   // returns the final path
@@ -46,6 +46,10 @@ io.on('connection', (socket) => {
 		// 	from: message.from,
 		// 	text: message.text
 		})
+	
+
+	socket.on('createLocationMessage', (coords) => {
+		io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
 	})
 
 // 	socket.emit('newEmail', {
@@ -59,8 +63,7 @@ io.on('connection', (socket) => {
 // 	socket.emit('newMessage', {
 // 		from: 'Nikita',
 // 		text: 'Yeah, Sure',
-// 	})
-// })
+})
 
 server.listen(3000, () => {
 	console.log("Server is up on port 3000");
